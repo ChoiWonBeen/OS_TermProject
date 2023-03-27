@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/OS_TermProject/static/css/main.073c9b0a.css",
+    "main.js": "/OS_TermProject/static/js/main.b2e25e14.js",
+    "static/js/787.f891ffdc.chunk.js": "/OS_TermProject/static/js/787.f891ffdc.chunk.js",
+    "index.html": "/OS_TermProject/index.html",
+    "main.073c9b0a.css.map": "/OS_TermProject/static/css/main.073c9b0a.css.map",
+    "main.b2e25e14.js.map": "/OS_TermProject/static/js/main.b2e25e14.js.map",
+    "787.f891ffdc.chunk.js.map": "/OS_TermProject/static/js/787.f891ffdc.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.b2e25e14.js"
+  ]
+}
