@@ -1,10 +1,19 @@
-import "./App.css";
+import TopNav from "./components/TopNav";
+import * as S from "./App.style";
+import ProcessSchedule from "./components/ProcessSchedule";
+import Gantt from "./components/Gantt";
+import Setting from "./components/Setting";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">프로세스 스케줄러</header>
-    </div>
+    <>
+      <TopNav />
+      <S.Container>
+        <ProcessSchedule />
+        <Gantt />
+        <Setting />
+      </S.Container>
+    </>
   );
 }
 
