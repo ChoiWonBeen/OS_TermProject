@@ -16,5 +16,5 @@ export const Heading = styled.div`
 export const Scheduler = styled.div`
   background-color: white;
   border-radius: 8px;
-  height: 22vh;
+  height: 202px;
 `;
