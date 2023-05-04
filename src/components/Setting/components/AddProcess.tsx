@@ -11,7 +11,13 @@ function AddProcess() {
         {processes.map((process) => (
           <S.ProcessItem key={process.id}>
             <S.CoreInnerItem color={process.mainColor}>
-              {process.name}
+              <S.ProcessName color={process.mainColor}>
+                {process.name}
+              </S.ProcessName>
+              <S.ProcessInputContainer color={process.subColor}>
+                <S.ProcessInput>AT</S.ProcessInput>
+                <S.ProcessInput>BT</S.ProcessInput>
+              </S.ProcessInputContainer>
             </S.CoreInnerItem>
           </S.ProcessItem>
         ))}

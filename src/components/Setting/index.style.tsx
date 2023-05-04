@@ -109,7 +109,7 @@ export const RemoveCoreBtn = styled(XIcon)`
 
 export const AddCoreBtn = styled.div`
   width: 100%;
-  height: 60px;
+  height: 54px;
   display: flex;
   font-size: 32px;
   justify-content: center;
@@ -214,4 +214,35 @@ export const CoreInnerItem = styled.div<{ color: string }>`
   height: 100px;
   background-color: ${({ color }) => color};
   border-radius: 10px;
+  padding: 3px;
+  display: flex;
+`;
+
+export const ProcessName = styled.div<{ color: string }>`
+  width: 42px;
+  height: 100%;
+  background-color: ${({ color }) => color};
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const ProcessInputContainer = styled.div<{ color: string }>`
+  width: 130px;
+  padding: 4px;
+  background-color: ${({ color }) => color};
+  border-radius: 0 7px 7px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+`;
+
+export const ProcessInput = styled.div`
+  width: 120px;
+  height: 40px;
+  background-color: white;
+  box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
 `;

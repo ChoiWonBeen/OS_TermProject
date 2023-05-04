@@ -6,10 +6,13 @@ export interface Process {
   name: string;
   mainColor: string;
   subColor: string;
+  worker?: ProcessWorker;
 }
 
-// 큐 관련 프로세스 예시
-export interface QueueProcess extends Process {
+export interface ProcessWorker {
+  id: number;
+  name: string;
+  workTimes: number[];
   isWaiting: boolean;
 }
 
@@ -32,9 +35,14 @@ export interface Processor {
 
 export interface ProcessResult {
   id: number;
+  process: Process;
   arrivalTime: number;
   burstTime: number;
   waitingTime: number;
   turnaroundTime: number;
   normalizedTurnaroundTime: number;
+}
+
+export interface Scheduler {
+  algorithm: "FCFS" | "RR" | "SPN" | "SRTN" | "HRRN" | "OSim";
 }

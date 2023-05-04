@@ -1,20 +1,22 @@
+import { ALGORITHM_LIST } from "static/algorithm";
 import * as S from "./index.style";
-const HEADER_LIST = [
-  { algoritm_name: "FCFS", color: "#18E806" },
-  { algoritm_name: "RR", color: "#FF5B52" },
-  { algoritm_name: "SPN", color: "#E8D106" },
-  { algoritm_name: "SRTN", color: "#7875FF" },
-  { algoritm_name: "HRRN", color: "#0697E8" },
-  { algoritm_name: "OSim", color: "#E88006" },
-];
+import { MAIN_COLOR_TABLE, SUB_COLOR_TABLE } from "static/color";
+import { useSchedulerStore } from "store/scheduler";
 
 function TopNav() {
+  const { scheduler, changeAlgorithm: setType } = useSchedulerStore();
   return (
     <S.Container>
-      {HEADER_LIST.map((item, index) => (
-        <S.HeaderItem key={index}>
-          <S.HeaderDot color={item.color} />
-          {item.algoritm_name}
+      {ALGORITHM_LIST.map((algorithm, index) => (
+        <S.HeaderItem
+          key={index}
+          selected={scheduler.algorithm === algorithm}
+          mainColor={MAIN_COLOR_TABLE[index]}
+          subColor={SUB_COLOR_TABLE[index]}
+          onClick={() => setType(algorithm)}
+        >
+          <S.HeaderDot color={MAIN_COLOR_TABLE[index]} />
+          {algorithm}
         </S.HeaderItem>
       ))}
     </S.Container>
