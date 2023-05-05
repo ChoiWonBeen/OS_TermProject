@@ -37,7 +37,7 @@ const changeVideo = (videoRef: RefObject<HTMLVideoElement>, index: number) => {
   if (videoRef.current) {
     videoRef.current.src = isDevelopment
       ? "/OS_TermProject" + VIDEO_INFO[index].src
-      : VIDEO_INFO[index].src;
+      : "." + VIDEO_INFO[index].src;
     videoRef.current.loop = VIDEO_INFO[index].isLoop;
   }
 };
