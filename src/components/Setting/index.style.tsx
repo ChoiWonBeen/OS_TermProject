@@ -431,12 +431,13 @@ export const StartContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-left: 40px;
-  gap: 20px;
+  gap: 15px;
 `;
 
 export const VideoContainer = styled.div`
   width: 370px;
   padding-top: 20px;
+  box-sizing: border-box;
   height: 144px;
   border-radius: 10px;
   background-color: #ffffff;
