@@ -30,7 +30,7 @@ function AddCore() {
                   subColor={processor.subColor}
                   onClick={() => changeProcessorCore(index, ECore)}
                 >
-                  ECore
+                  <em>E</em>core
                 </S.CoreButton>
                 <S.CoreButton
                   selected={processor.core.name === "P"}
@@ -38,7 +38,7 @@ function AddCore() {
                   subColor={processor.subColor}
                   onClick={() => changeProcessorCore(index, PCore)}
                 >
-                  PCore
+                  <em>P</em>core
                 </S.CoreButton>
               </S.RadioContainer>
             </S.CoreWrapper>

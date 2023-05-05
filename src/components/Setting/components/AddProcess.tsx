@@ -3,20 +3,51 @@ import * as S from "../index.style";
 import { MAIN_COLOR_TABLE, SUB_COLOR_TABLE } from "static/color";
 
 function AddProcess() {
-  const { processes, lastId, addProcess, changeProcess, removeProcess } =
+  const { processes, lastId, addProcess, removeProcess, changeProcessTime } =
     useProcessStore();
   return (
     <S.AddProcessContainer>
       <S.ProcessItemSlider>
-        {processes.map((process) => (
+        {processes.map((process, index) => (
           <S.ProcessItem key={process.id}>
             <S.CoreInnerItem color={process.mainColor}>
               <S.ProcessName color={process.mainColor}>
                 {process.name}
               </S.ProcessName>
               <S.ProcessInputContainer color={process.subColor}>
-                <S.ProcessInput>AT</S.ProcessInput>
-                <S.ProcessInput>BT</S.ProcessInput>
+                <S.RemoveProcessBtn onClick={() => removeProcess(index)} />
+                <S.ProcessInput>
+                  <S.ProcessTypeName
+                    mainColor={process.mainColor}
+                    subColor={process.subColor}
+                  >
+                    AT
+                  </S.ProcessTypeName>
+                  <S.ProcessTimeInput
+                    type="number"
+                    min="0"
+                    value={process.arrivalTime}
+                    onChange={(e) =>
+                      changeProcessTime(index, Number(e.target.value), true)
+                    }
+                  />
+                </S.ProcessInput>
+                <S.ProcessInput>
+                  <S.ProcessTypeName
+                    mainColor={process.mainColor}
+                    subColor={process.subColor}
+                  >
+                    BT
+                  </S.ProcessTypeName>
+                  <S.ProcessTimeInput
+                    type="number"
+                    min="0"
+                    value={process.burstTime}
+                    onChange={(e) =>
+                      changeProcessTime(index, Number(e.target.value), false)
+                    }
+                  />
+                </S.ProcessInput>
               </S.ProcessInputContainer>
             </S.CoreInnerItem>
           </S.ProcessItem>
@@ -31,7 +62,7 @@ function AddProcess() {
                 subColor: SUB_COLOR_TABLE[lastId % SUB_COLOR_TABLE.length],
                 arrivalTime: 0,
                 leftWork: 0,
-                workAmount: 0,
+                burstTime: 0,
               })
             }
           >

@@ -6,7 +6,7 @@ export const MAIN_COLOR_TABLE = [
   "#254F29",
   "#A54660",
   "#DF333C",
-  "#10193D",
+  // "#10193D",
 ];
 
 export const SUB_COLOR_TABLE = [
@@ -17,5 +17,5 @@ export const SUB_COLOR_TABLE = [
   "#FBECBD",
   "#EDD5DF",
   "#FFD8E1",
-  "#A2C0BE",
+  // "#A2C0BE",
 ];

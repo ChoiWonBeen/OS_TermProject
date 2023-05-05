@@ -1,7 +1,7 @@
 export interface Process {
   id: number;
   arrivalTime: number;
-  workAmount: number;
+  burstTime: number;
   leftWork: number;
   name: string;
   mainColor: string;
