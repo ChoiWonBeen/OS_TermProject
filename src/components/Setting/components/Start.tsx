@@ -15,6 +15,7 @@ function Start() {
       <S.VideoContainer>
         <S.CatVideo autoPlay muted ref={ref} preload="auto" />
       </S.VideoContainer>
+      <S.ButtonContainer></S.ButtonContainer>
     </S.StartContainer>
   );
 }

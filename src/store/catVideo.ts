@@ -1,25 +1,27 @@
 import { RefObject } from "react";
 import { create } from "zustand";
 
+const isDevelopment = process.env.NODE_ENV === "development";
+
 export const VIDEO_INFO = [
   {
-    src: "OS_TermProject/video/1.cat_init.mp4",
+    src: "/video/1.cat_init.mp4",
     isLoop: false,
   },
   {
-    src: "OS_TermProject/video/2.inf_cat_stay.mp4",
+    src: "/video/2.inf_cat_stay.mp4",
     isLoop: false,
   },
   {
-    src: "OS_TermProject/video/3.work_start.mp4",
+    src: "/video/3.work_start.mp4",
     isLoop: false,
   },
   {
-    src: "OS_TermProject/video/4.inf_work_default.mp4",
+    src: "/video/4.inf_work_default.mp4",
     isLoop: true,
   },
   {
-    src: "OS_TermProject/video/5.cat_out.mp4",
+    src: "/video/5.cat_out.mp4",
     isLoop: false,
   },
 ];
@@ -33,7 +35,9 @@ interface CatVideoStore {
 
 const changeVideo = (videoRef: RefObject<HTMLVideoElement>, index: number) => {
   if (videoRef.current) {
-    videoRef.current.src = VIDEO_INFO[index].src;
+    videoRef.current.src = isDevelopment
+      ? "/OS_TermProject" + VIDEO_INFO[index].src
+      : VIDEO_INFO[index].src;
     videoRef.current.loop = VIDEO_INFO[index].isLoop;
   }
 };

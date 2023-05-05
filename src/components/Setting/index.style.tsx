@@ -431,13 +431,17 @@ export const StartContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-left: 40px;
+  gap: 20px;
 `;
 
 export const VideoContainer = styled.div`
   width: 370px;
-  height: 114px;
+  padding-top: 20px;
+  height: 144px;
   border-radius: 10px;
   background-color: #ffffff;
+  display: flex;
+  align-items: center;
 `;
 
 export const CatVideo = styled.video`
@@ -467,4 +471,11 @@ export const Koreatech = styled.img`
   right: 10px;
   width: 157px;
   height: 36px;
+`;
+
+export const ButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
 `;
