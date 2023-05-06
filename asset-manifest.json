@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/OS_TermProject/static/css/main.3776e555.css",
-    "main.js": "/OS_TermProject/static/js/main.606dc578.js",
+    "main.js": "/OS_TermProject/static/js/main.7e1efc00.js",
     "static/media/subset-Pretendard-Black.woff": "/OS_TermProject/static/media/subset-Pretendard-Black.592d4e79b519f9ff5841.woff",
     "static/media/subset-Pretendard-ExtraBold.woff": "/OS_TermProject/static/media/subset-Pretendard-ExtraBold.a55b261bbab620c50494.woff",
     "static/media/subset-Pretendard-Bold.woff": "/OS_TermProject/static/media/subset-Pretendard-Bold.3f42b66ba234cba349d0.woff",
@@ -29,10 +29,10 @@
     "static/media/replay.svg": "/OS_TermProject/static/media/replay.49487ffb14a4f262c09463341792f9c1.svg",
     "index.html": "/OS_TermProject/index.html",
     "main.3776e555.css.map": "/OS_TermProject/static/css/main.3776e555.css.map",
-    "main.606dc578.js.map": "/OS_TermProject/static/js/main.606dc578.js.map"
+    "main.7e1efc00.js.map": "/OS_TermProject/static/js/main.7e1efc00.js.map"
   },
   "entrypoints": [
     "static/css/main.3776e555.css",
-    "static/js/main.606dc578.js"
+    "static/js/main.7e1efc00.js"
   ]
 }
