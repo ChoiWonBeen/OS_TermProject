@@ -30,11 +30,10 @@ export const SRTN: Scheduling = (processors, processes) => {
       }
     });
 
-    // 프로세서가 비어있으면 readyQueue에서 프로세스를 꺼내서 넣는다.
     processors.forEach((processor, index) => {
+      // 프로세서가 비어있으면 readyQueue에서 프로세스를 꺼내서 넣는다.
       if (processor.currentProcess === null) {
         if (readyQueue.length > 0) {
-          // 가장 짧은 leftWork를 가진 프로세스를 찾는다.
           const process = readyQueue.reduce((prev, curr) => {
             return prev.leftWork < curr.leftWork ? prev : curr;
           });
@@ -49,6 +48,23 @@ export const SRTN: Scheduling = (processors, processes) => {
           if (processorResultList[index].processAllocation[currentTime - 1] === null || currentTime === 0) {
             processorResultList[index].totalPower += processor.core.startingPower;
           }
+        }
+      } else {
+        // readyQueue를 조사해서 현재 프로세스보다 더 짧은 leftWork를 가진 프로세스가 있으면
+        // 현재 프로세스를 readyQueue에 넣고, 그 프로세스를 현재 프로세스로 바꾼다.
+        // 또한 readyQueue에서 해당 프로세스를 제거한다.
+        const shorterProcess = readyQueue.find(
+          (process) => process.leftWork > 0 && process.leftWork < processor.currentProcess!.leftWork
+        );
+        console.log(shorterProcess);
+
+        if (shorterProcess) {
+          readyQueue.splice(
+            readyQueue.findIndex((rqProcess) => rqProcess.id === shorterProcess.id),
+            1
+          );
+          readyQueue.push(processor.currentProcess!);
+          processor.currentProcess = shorterProcess;
         }
       }
     });
@@ -89,14 +105,6 @@ export const SRTN: Scheduling = (processors, processes) => {
     readyQueue.forEach((process) => {
       const processIndex = processResultList.findIndex((processResult) => processResult.processId === process.id);
       processResultList[processIndex].waitingTime++;
-    });
-
-    // 프로세서 각각의 currentProcess를 비우고, readyQueue에 담는다
-    processors.forEach((processor) => {
-      if (processor.currentProcess) {
-        readyQueue.push(processor.currentProcess);
-        processor.currentProcess = null;
-      }
     });
   }
 

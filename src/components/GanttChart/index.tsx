@@ -78,7 +78,12 @@ function GanttChart({ isProcess }: { isProcess: boolean }) {
                       }
                       const processor = processors.find((processor) => processor.id === processorId)!;
                       return (
-                        <S.DataBox mainColor={processor.mainColor} subColor={processor.subColor} size={count}>
+                        <S.DataBox
+                          key={index}
+                          mainColor={processor.mainColor}
+                          subColor={processor.subColor}
+                          size={count}
+                        >
                           {processor.name}
                         </S.DataBox>
                       );
@@ -96,7 +101,7 @@ function GanttChart({ isProcess }: { isProcess: boolean }) {
                       }
                       const process = processes.find((process) => process.id === processId)!;
                       return (
-                        <S.DataBox mainColor={process.mainColor} subColor={process.subColor} size={count}>
+                        <S.DataBox key={index} mainColor={process.mainColor} subColor={process.subColor} size={count}>
                           {process.name}
                         </S.DataBox>
                       );
