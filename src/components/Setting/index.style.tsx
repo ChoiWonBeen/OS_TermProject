@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import { ReactComponent as XIcon } from "assets/svg/x.svg";
+import { ReactComponent as ReplaySVG } from "assets/svg/replay.svg";
+import { ReactComponent as PlaySVG } from "assets/svg/play.svg";
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -48,8 +51,7 @@ export const Nav = styled.div<{ selected: boolean }>`
   font-size: 20px;
   height: 40px;
   background-color: ${({ selected }) => (selected ? "#2C2A75" : "#8B8AAE")};
-  border-radius: ${({ selected }) =>
-    selected ? "10px 0 0 0" : "10px 0 0px 10px;"};
+  border-radius: ${({ selected }) => (selected ? "10px 0 0 0" : "10px 0 0px 10px;")};
   color: #ffffff;
   cursor: pointer;
 `;
@@ -141,11 +143,9 @@ export const CoreButton = styled.div<{
   cursor: pointer;
   border-radius: 3px;
 
-  background-color: ${({ selected, subColor }) =>
-    selected ? subColor : "white"};
+  background-color: ${({ selected, subColor }) => (selected ? subColor : "white")};
   color: ${({ selected, mainColor }) => (selected ? mainColor : "black;")};
-  box-shadow: ${({ selected }) =>
-    selected && "3px 3px 4px rgba(0, 0, 0, 0.25);"};
+  box-shadow: ${({ selected }) => selected && "3px 3px 4px rgba(0, 0, 0, 0.25);"};
   transition: 0.7s;
 
   em {
@@ -425,7 +425,7 @@ export const StartContainer = styled.div`
   height: 100%;
   box-sizing: border-box;
   width: 410px;
-  padding: 24px;
+  padding: 24px 12px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -479,4 +479,55 @@ export const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
   height: 60px;
+`;
+
+export const TimeQuantumContainer = styled.div`
+  width: 145px;
+  height: 100%;
+  border-radius: 10px;
+  display: grid;
+  overflow: hidden;
+  grid-template-columns: auto 1fr;
+`;
+
+export const TimeQuantumName = styled.div`
+  width: 60px;
+  height: 100%;
+  background-color: #af3e95;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 15px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
+
+export const TimeQuantumInput = styled.input`
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  border: none;
+  outline: none;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 23px;
+  padding: 0 5px 0 10px;
+  box-sizing: border-box;
+
+  &:disabled {
+    background-color: #a3a3a3;
+  }
+`;
+
+export const Replay = styled(ReplaySVG)`
+  cursor: pointer;
+`;
+
+export const Play = styled(PlaySVG)`
+  cursor: pointer;
 `;

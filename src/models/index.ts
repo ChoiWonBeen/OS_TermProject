@@ -6,14 +6,6 @@ export interface Process {
   name: string;
   mainColor: string;
   subColor: string;
-  worker?: ProcessWorker;
-}
-
-export interface ProcessWorker {
-  id: number;
-  name: string;
-  workTimes: number[];
-  isWaiting: boolean;
 }
 
 export interface Core {
@@ -34,15 +26,30 @@ export interface Processor {
 }
 
 export interface ProcessResult {
-  id: number;
-  process: Process;
+  processId: number;
   arrivalTime: number;
   burstTime: number;
   waitingTime: number;
   turnaroundTime: number;
   normalizedTurnaroundTime: number;
+  processorAllocation: Array<number | null>;
+}
+
+export interface ProcessorResult {
+  processorId: number;
+  totalPower: number;
+  processAllocation: Array<number | null>;
 }
 
 export interface Scheduler {
   algorithm: "FCFS" | "RR" | "SPN" | "SRTN" | "HRRN" | "OSim";
+  status: "idle" | "running" | "finished";
 }
+
+export interface ScheduleResult {
+  processResultList: ProcessResult[];
+  processorResultList: ProcessorResult[];
+  totalTime: number;
+}
+
+export type Scheduling = (processorList: Processor[], processList: Process[], timeQuantum?: number) => ScheduleResult;

@@ -17,7 +17,15 @@ export const VIDEO_INFO = [
     isLoop: false,
   },
   {
+    src: "/video/4.inf_work_slow.mp4",
+    isLoop: true,
+  },
+  {
     src: "/video/4.inf_work_default.mp4",
+    isLoop: true,
+  },
+  {
+    src: "/video/4.inf_work_fast.mp4",
     isLoop: true,
   },
   {
@@ -35,9 +43,7 @@ interface CatVideoStore {
 
 const changeVideo = (videoRef: RefObject<HTMLVideoElement>, index: number) => {
   if (videoRef.current) {
-    videoRef.current.src = isDevelopment
-      ? "/OS_TermProject" + VIDEO_INFO[index].src
-      : "." + VIDEO_INFO[index].src;
+    videoRef.current.src = isDevelopment ? "/OS_TermProject" + VIDEO_INFO[index].src : "." + VIDEO_INFO[index].src;
     videoRef.current.loop = VIDEO_INFO[index].isLoop;
   }
 };

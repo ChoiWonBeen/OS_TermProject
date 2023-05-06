@@ -1,16 +1,14 @@
 import TopNav from "./components/TopNav";
 import * as S from "./App.style";
-import ProcessSchedule from "./components/ProcessSchedule";
-import Gantt from "./components/Gantt";
 import Setting from "./components/Setting";
+import Chart from "components/Chart";
 
 function App() {
   return (
     <>
       <TopNav />
       <S.Container>
-        <ProcessSchedule />
-        <Gantt />
+        <Chart />
         <Setting />
       </S.Container>
     </>
