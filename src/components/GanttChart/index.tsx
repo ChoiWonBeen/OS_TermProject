@@ -27,7 +27,7 @@ function getContinuousArray(processAllocation: (number | null)[]): [number | nul
   return result;
 }
 
-function GanttChart() {
+function GanttChart({ isProcess }: { isProcess: boolean }) {
   const processes = useProcessStore((state) => state.processes);
   const processors = useProcessorStore((state) => state.processors);
   const result = useSchedulerStore((state) => state.schedulerResult);
@@ -40,11 +40,17 @@ function GanttChart() {
             <S.Left>
               <S.TableSubject />
               <S.TableItemNames>
-                {processes.map((process) => (
-                  <S.TableItemName key={process.id} mainColor={process.mainColor}>
-                    {process.name}
-                  </S.TableItemName>
-                ))}
+                {isProcess
+                  ? processes.map((process) => (
+                      <S.TableItemName key={process.id} mainColor={process.mainColor}>
+                        {process.name}
+                      </S.TableItemName>
+                    ))
+                  : processors.map((processor) => (
+                      <S.TableItemName key={processor.id} mainColor={processor.mainColor}>
+                        {processor.name}
+                      </S.TableItemName>
+                    ))}
               </S.TableItemNames>
             </S.Left>
           </S.TableContents>
@@ -60,25 +66,43 @@ function GanttChart() {
               time={Math.max(result?.totalTime ? result?.totalTime + 2 : 0, 20)}
               isTransitionStart={!!result}
             />
-            {result &&
-              result.processResultList.map((processResult) => (
-                <S.DataRow
-                  key={processResult.processId}
-                  colCount={Math.max(result?.totalTime ? result?.totalTime + 2 : 0, 20) - 1}
-                >
-                  {getContinuousArray(processResult.processorAllocation).map(([processorId, count], index) => {
-                    if (processorId === null) {
-                      return <S.DataBox key={index} mainColor={"none"} subColor={"none"} size={count}></S.DataBox>;
-                    }
-                    const processor = processors.find((processor) => processor.id === processorId)!;
-                    return (
-                      <S.DataBox mainColor={processor.mainColor} subColor={processor.subColor} size={count}>
-                        {processor.name}
-                      </S.DataBox>
-                    );
-                  })}
-                </S.DataRow>
-              ))}
+            {result && isProcess
+              ? result.processResultList.map((processResult) => (
+                  <S.DataRow
+                    key={processResult.processId}
+                    colCount={Math.max(result?.totalTime ? result?.totalTime + 2 : 0, 20) - 1}
+                  >
+                    {getContinuousArray(processResult.processorAllocation).map(([processorId, count], index) => {
+                      if (processorId === null) {
+                        return <S.DataBox key={index} mainColor={"none"} subColor={"none"} size={count}></S.DataBox>;
+                      }
+                      const processor = processors.find((processor) => processor.id === processorId)!;
+                      return (
+                        <S.DataBox mainColor={processor.mainColor} subColor={processor.subColor} size={count}>
+                          {processor.name}
+                        </S.DataBox>
+                      );
+                    })}
+                  </S.DataRow>
+                ))
+              : result?.processorResultList.map((processorResult) => (
+                  <S.DataRow
+                    key={processorResult.processorId}
+                    colCount={Math.max(result?.totalTime ? result?.totalTime + 2 : 0, 20) - 1}
+                  >
+                    {getContinuousArray(processorResult.processAllocation).map(([processId, count], index) => {
+                      if (processId === null) {
+                        return <S.DataBox key={index} mainColor={"none"} subColor={"none"} size={count}></S.DataBox>;
+                      }
+                      const process = processes.find((process) => process.id === processId)!;
+                      return (
+                        <S.DataBox mainColor={process.mainColor} subColor={process.subColor} size={count}>
+                          {process.name}
+                        </S.DataBox>
+                      );
+                    })}
+                  </S.DataRow>
+                ))}
           </S.DataTable>
         </div>
       </S.TableContainer>

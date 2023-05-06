@@ -5,7 +5,7 @@ function ProcessChart() {
   return (
     <S.Container>
       <S.Scheduler>
-        <GanttChart />
+        <GanttChart isProcess />
       </S.Scheduler>
     </S.Container>
   );

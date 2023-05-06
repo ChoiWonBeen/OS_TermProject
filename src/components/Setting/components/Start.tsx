@@ -33,9 +33,7 @@ function Start() {
           />
         </S.TimeQuantumContainer>
 
-        <S.Replay onClick={finish} />
-
-        <S.Play onClick={start} />
+        {scheduler.status === "running" ? <S.Replay onClick={finish} /> : <S.Play onClick={start} />}
       </S.ButtonContainer>
     </S.StartContainer>
   );
