@@ -30,7 +30,10 @@ export const SRTN: Scheduling = (processors, processes) => {
       }
     });
 
-    processors.forEach((processor, index) => {
+    const emptyProcessors = processors.filter((processor) => processor.currentProcess === null);
+    const fillProcessors = processors.filter((processor) => processor.currentProcess !== null);
+
+    emptyProcessors.forEach((processor, index) => {
       // 프로세서가 비어있으면 readyQueue에서 프로세스를 꺼내서 넣는다.
       if (processor.currentProcess === null) {
         if (readyQueue.length > 0) {
@@ -49,23 +52,24 @@ export const SRTN: Scheduling = (processors, processes) => {
             processorResultList[index].totalPower += processor.core.startingPower;
           }
         }
-      } else {
-        // readyQueue를 조사해서 현재 프로세스보다 더 짧은 leftWork를 가진 프로세스가 있으면
-        // 현재 프로세스를 readyQueue에 넣고, 그 프로세스를 현재 프로세스로 바꾼다.
-        // 또한 readyQueue에서 해당 프로세스를 제거한다.
-        const shorterProcess = readyQueue.find(
-          (process) => process.leftWork > 0 && process.leftWork < processor.currentProcess!.leftWork
-        );
-        console.log(shorterProcess);
+      }
+    });
 
-        if (shorterProcess) {
-          readyQueue.splice(
-            readyQueue.findIndex((rqProcess) => rqProcess.id === shorterProcess.id),
-            1
-          );
-          readyQueue.push(processor.currentProcess!);
-          processor.currentProcess = shorterProcess;
-        }
+    fillProcessors.forEach((processor) => {
+      // readyQueue를 조사해서 현재 프로세스보다 더 짧은 leftWork를 가진 프로세스가 있으면
+      // 현재 프로세스를 readyQueue에 넣고, 그 프로세스를 현재 프로세스로 바꾼다.
+
+      const shorterProcess = readyQueue.find(
+        (process) => process.leftWork > 0 && process.leftWork < processor.currentProcess!.leftWork
+      );
+
+      if (shorterProcess) {
+        readyQueue.splice(
+          readyQueue.findIndex((rqProcess) => rqProcess.id === shorterProcess.id),
+          1
+        );
+        readyQueue.push(processor.currentProcess!);
+        processor.currentProcess = shorterProcess;
       }
     });
 
