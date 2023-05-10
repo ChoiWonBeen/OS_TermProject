@@ -77,7 +77,7 @@ function Result() {
                   <S.ProcessTime>{processResult.waitingTime}</S.ProcessTime>
                   <S.ProcessTime>{processResult.turnaroundTime}</S.ProcessTime>
                   <S.ProcessTime>{processResult.normalizedTurnaroundTime.toFixed(2)}</S.ProcessTime>
-                  {isOsim && <S.ProcessTime>{processResult.memory}</S.ProcessTime>}
+                  {isOsim && <S.ProcessTime>{processResult.memory?.toFixed(2)}</S.ProcessTime>}
                 </Fragment>
               ))}
           </S.ScheduleResult>

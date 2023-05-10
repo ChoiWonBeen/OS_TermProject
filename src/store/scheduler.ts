@@ -14,6 +14,8 @@ interface SchedulerStore {
   changeTimeQuantum: (time: number) => void;
   start: () => void;
   finish: () => void;
+  changeMemoryNiceValue: (value: number) => void;
+  changeStudyNiceValue: (value: number) => void;
 }
 
 export const useSchedulerStore = create<SchedulerStore>((set, get) => ({
@@ -53,7 +55,13 @@ export const useSchedulerStore = create<SchedulerStore>((set, get) => ({
     const processes = useProcessStore.getState().processes;
     const processors = useProcessorStore.getState().processors;
 
-    const result = ALGORITHM_FUNCTION[algorithm](processors, processes, get().timeQuantum);
+    const result = ALGORITHM_FUNCTION[algorithm](
+      processors,
+      processes,
+      get().timeQuantum,
+      get().studyNiceValue,
+      get().memoryNiceValue
+    );
     console.log(result);
     set(() => ({
       schedulerResult: result,
@@ -79,5 +87,17 @@ export const useSchedulerStore = create<SchedulerStore>((set, get) => ({
     }));
 
     setVideo(0);
+  },
+
+  changeMemoryNiceValue: (value: number) => {
+    set(() => ({
+      memoryNiceValue: value,
+    }));
+  },
+
+  changeStudyNiceValue: (value: number) => {
+    set(() => ({
+      studyNiceValue: value,
+    }));
   },
 }));

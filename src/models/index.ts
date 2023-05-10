@@ -54,4 +54,10 @@ export interface ScheduleResult {
   totalTime: number;
 }
 
-export type Scheduling = (processorList: Processor[], processList: Process[], timeQuantum?: number) => ScheduleResult;
+export type Scheduling = (
+  processorList: Processor[],
+  processList: Process[],
+  timeQuantum?: number,
+  studyNiceValue?: number,
+  memoryNiceValue?: number
+) => ScheduleResult;

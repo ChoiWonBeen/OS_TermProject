@@ -2,10 +2,11 @@ import { Process, ProcessResult, Processor, ProcessorResult, Scheduling } from "
 
 type OSimProcessResult = ProcessResult & { studyRate: number; TQ: number; memory: number };
 
-export const OSim: Scheduling = (processors, processes, timeQuantum) => {
+export const OSim: Scheduling = (processors, processes, timeQuantum, SNV, MNV) => {
   const readyQueue: Process[] = [];
   const TQ = timeQuantum!;
-  const niceValue = 5;
+  const studyNiceValue = SNV!;
+  const memoryNiceValue = MNV!;
 
   const processResultList: OSimProcessResult[] = processes.map((process) => ({
     processId: process.id,
@@ -109,7 +110,7 @@ export const OSim: Scheduling = (processors, processes, timeQuantum) => {
         const processIndex = processResultList.findIndex(
           (processResult) => processResult.processId === processor.currentProcess?.id
         );
-        processResultList[processIndex].studyRate += processor.core.timeEfficiency * niceValue;
+        processResultList[processIndex].studyRate += processor.core.timeEfficiency * studyNiceValue;
 
         // TQ값을 줄인다.
         processResultList[processIndex].TQ -= 1;
@@ -134,7 +135,7 @@ export const OSim: Scheduling = (processors, processes, timeQuantum) => {
       if (processes[index].arrivalTime > currentTime) return;
       if (processes[index].leftWork <= 0) return;
       processResult.memory =
-        100 * Math.exp((-(currentTime - processes[index].arrivalTime) / processResult.studyRate) * 3);
+        100 * Math.exp((-(currentTime - processes[index].arrivalTime) / processResult.studyRate) * memoryNiceValue);
     });
   }
 

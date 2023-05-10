@@ -6,3 +6,7 @@ export const Container = styled.div`
   flex-direction: column;
   gap: 30px;
 `;
+
+export const Temp = styled.div`
+  color: white;
+`;
