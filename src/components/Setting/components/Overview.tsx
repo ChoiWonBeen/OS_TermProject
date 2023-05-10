@@ -51,7 +51,7 @@ function Overview() {
             {isOsim && (
               <S.OverviewProcessTime
                 type="number"
-                min="0"
+                min="1"
                 value={process.level}
                 onChange={(e) => {
                   changeProcessTime(index, Number(e.target.value), false, true);

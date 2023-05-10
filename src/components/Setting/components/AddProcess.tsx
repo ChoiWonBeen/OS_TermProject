@@ -65,7 +65,7 @@ function AddProcess() {
                 arrivalTime: 0,
                 leftWork: 0,
                 burstTime: 0,
-                level: 0,
+                level: 1,
               })
             }
           >

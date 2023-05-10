@@ -95,7 +95,7 @@ export const useProcessStore = create<ProcessStore>((set) => ({
       name: "P1",
       mainColor: MAIN_COLOR_TABLE[0],
       subColor: SUB_COLOR_TABLE[0],
-      level: 0,
+      level: 1,
     },
   ],
   addProcess: (process: Process) => {
