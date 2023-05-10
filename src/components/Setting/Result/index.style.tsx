@@ -34,6 +34,21 @@ export const Heading = styled.div`
   display: flex;
   align-items: center;
   padding-left: 18px;
+  justify-content: space-between;
+`;
+
+export const Varience = styled.div`
+  width: 100px;
+  height: 24px;
+  background: #ffffff;
+  border-radius: 3px;
+  font-weight: 500;
+  font-size: 15px;
+  color: #000000;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const ChartWrapper = styled.div`

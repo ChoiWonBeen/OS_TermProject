@@ -8,6 +8,7 @@ interface SchedulerStore {
   scheduler: Scheduler;
   schedulerResult: ScheduleResult | null;
   timeQuantum: number;
+  varienceMemory: number;
   changeAlgorithm: (type: Scheduler["algorithm"]) => void;
   changeTimeQuantum: (time: number) => void;
   start: () => void;
@@ -21,6 +22,7 @@ export const useSchedulerStore = create<SchedulerStore>((set, get) => ({
   },
   schedulerResult: null,
   timeQuantum: 1,
+  varienceMemory: 0,
   changeAlgorithm: (type: Scheduler["algorithm"]) => {
     set((state) => ({
       scheduler: {
@@ -51,6 +53,22 @@ export const useSchedulerStore = create<SchedulerStore>((set, get) => ({
 
     const result = ALGORITHM_FUNCTION[algorithm](processors, processes, get().timeQuantum);
     console.log(result);
+    const averageNTT =
+      result.processResultList.reduce((acc, cur) => acc + cur.normalizedTurnaroundTime, 0) /
+      result.processResultList.length;
+    // memory의 분산을 구한다
+    const averageMemory =
+      result.processResultList.reduce((acc, cur) => acc + cur.memory!, 0) / result.processResultList.length;
+    // 분산
+    const varianceMemory =
+      result.processResultList.reduce((acc, cur) => acc + Math.pow(cur.memory! - averageMemory, 2), 0) /
+      result.processResultList.length;
+    console.log(averageNTT, varianceMemory);
+
+    set(() => ({
+      varienceMemory: varianceMemory,
+    }));
+
     set(() => ({
       schedulerResult: result,
     }));

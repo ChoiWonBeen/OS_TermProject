@@ -37,7 +37,7 @@ function AddProcess() {
                     onChange={(e) => changeProcessTime(index, Number(e.target.value), false)}
                   />
                 </S.ProcessInput>
-                {algorithm === "OSim" && (
+                {(algorithm === "OSim" || algorithm === "VSRR") && (
                   <S.ProcessInput>
                     <S.ProcessTypeName mainColor={process.mainColor} subColor={process.subColor}>
                       LV

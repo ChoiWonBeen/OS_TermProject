@@ -7,7 +7,7 @@ function Overview() {
   const processors = useProcessorStore((state) => state.processors);
   const { processes, changeProcessTime } = useProcessStore();
   const algorithm = useSchedulerStore((state) => state.scheduler.algorithm);
-  const isOsim = algorithm === "OSim";
+  const isOsim = algorithm === "OSim" || algorithm === "VSRR";
 
   return (
     <S.OverviewContainer>

@@ -11,7 +11,9 @@ function Result() {
   const result = useSchedulerStore((state) => state.schedulerResult);
   const processors = useProcessorStore((state) => state.processors);
   const processes = useProcessStore((state) => state.processes);
-  const isOsim = useSchedulerStore((state) => state.scheduler.algorithm) === "OSim";
+  const algorithm = useSchedulerStore((state) => state.scheduler.algorithm);
+  const varienceMemory = useSchedulerStore((state) => state.varienceMemory);
+  const isOsim = algorithm === "OSim" || algorithm === "VSRR";
 
   return (
     <S.Container>
@@ -56,7 +58,10 @@ function Result() {
       </S.Background>
 
       <S.BackgroundRight>
-        <S.Heading>Scheduling Result</S.Heading>
+        <S.Heading>
+          <span>Scheduling Result</span>
+          {isOsim && <S.Varience>분산: {varienceMemory.toFixed(2)}</S.Varience>}
+        </S.Heading>
         <S.ScheduleResultHeader isOsim={isOsim}>
           <S.ProcessName color={"#5639B0"}>ID</S.ProcessName>
           <S.ProcessName color={"#5639B0"}>AT</S.ProcessName>

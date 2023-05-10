@@ -27,7 +27,7 @@ function Start() {
           <S.TimeQuantumInput
             type="number"
             min="1"
-            disabled={scheduler.algorithm !== "RR" && scheduler.algorithm !== "OSim"}
+            disabled={scheduler.algorithm !== "RR" && scheduler.algorithm !== "OSim" && scheduler.algorithm !== "VSRR"}
             value={timeQuantum}
             onChange={(e) => changeTimeQuantum(Number(e.target.value))}
           />
