@@ -1,4 +1,4 @@
-import { Process, ProcessResult, ProcessorResult, Scheduling } from "models";
+import { Process, ProcessResult, Processor, ProcessorResult, Scheduling } from "models";
 
 export const FCFS: Scheduling = (processors, processes) => {
   const readyQueue: Process[] = [];
@@ -24,26 +24,46 @@ export const FCFS: Scheduling = (processors, processes) => {
   while (processes.some((process) => process.leftWork > 0)) {
     let currentTime = time;
     // 시작 전 프로세스를 readyQueue에 넣는다.
+    const processList: Process[] = [];
     processes.forEach((process) => {
       if (process.arrivalTime === currentTime) {
-        readyQueue.push(process);
+        processList.push(process);
       }
     });
+    // process의 leftWork의 내림차순으로 정렬한다.
+    processList.sort((a, b) => b.leftWork - a.leftWork);
 
-    // 프로세서가 비어있으면 readyQueue에서 프로세스를 꺼내서 넣는다.
-    processors.forEach((processor, index) => {
+    processList.forEach((process) => {
+      readyQueue.push(process);
+    });
+
+    // 프로세서가 비어있으면 readyQueue에서 프로세스를 꺼내서 넣는다. (P코어 우선)
+    const PCoreProcessors = processors.filter((processor) => processor.core.name === "P");
+    const ECoreProcessors = processors.filter((processor) => processor.core.name === "E");
+
+    const fillProcessors = (processor: Processor) => {
       if (processor.currentProcess === null) {
         if (readyQueue.length > 0) {
           const process = readyQueue.shift();
+          const processorIndex = processors.findIndex((ps) => ps.id === processor.id);
           if (process) {
             processor.currentProcess = process;
           }
-          if (processorResultList[index].processAllocation[currentTime - 1] === null || currentTime === 0) {
-            processorResultList[index].totalPower += processor.core.startingPower;
+          if (processorResultList[processorIndex].processAllocation[currentTime - 1] === null || currentTime === 0) {
+            processorResultList[processorIndex].totalPower += processor.core.startingPower;
           }
         }
       }
-    });
+    };
+
+    PCoreProcessors.forEach(fillProcessors);
+    ECoreProcessors.forEach(fillProcessors);
+
+    // 프로세서들 탐색하면서
+    // currentProcess가 null인 processor들을 찾고
+    // processor들의 갯수만큼 readyQueue에서 꺼내 list를 만들고
+    // 그 리스트를 BT를 기준으로 정렬하고
+    // P코어에 탐색하면서 넣고 P코어 없으면 E코어에 넣는다.
 
     // 프로세스의 작업 진행을 기록한다.
     processes.forEach((process, index) => {

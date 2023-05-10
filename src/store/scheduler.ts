@@ -8,14 +8,10 @@ interface SchedulerStore {
   scheduler: Scheduler;
   schedulerResult: ScheduleResult | null;
   timeQuantum: number;
-  memoryNiceValue: number;
-  studyNiceValue: number;
   changeAlgorithm: (type: Scheduler["algorithm"]) => void;
   changeTimeQuantum: (time: number) => void;
   start: () => void;
   finish: () => void;
-  changeMemoryNiceValue: (value: number) => void;
-  changeStudyNiceValue: (value: number) => void;
 }
 
 export const useSchedulerStore = create<SchedulerStore>((set, get) => ({
@@ -25,8 +21,6 @@ export const useSchedulerStore = create<SchedulerStore>((set, get) => ({
   },
   schedulerResult: null,
   timeQuantum: 1,
-  memoryNiceValue: 0,
-  studyNiceValue: 0,
   changeAlgorithm: (type: Scheduler["algorithm"]) => {
     set((state) => ({
       scheduler: {
@@ -55,13 +49,7 @@ export const useSchedulerStore = create<SchedulerStore>((set, get) => ({
     const processes = useProcessStore.getState().processes;
     const processors = useProcessorStore.getState().processors;
 
-    const result = ALGORITHM_FUNCTION[algorithm](
-      processors,
-      processes,
-      get().timeQuantum,
-      get().studyNiceValue,
-      get().memoryNiceValue
-    );
+    const result = ALGORITHM_FUNCTION[algorithm](processors, processes, get().timeQuantum);
     console.log(result);
     set(() => ({
       schedulerResult: result,
@@ -87,17 +75,5 @@ export const useSchedulerStore = create<SchedulerStore>((set, get) => ({
     }));
 
     setVideo(0);
-  },
-
-  changeMemoryNiceValue: (value: number) => {
-    set(() => ({
-      memoryNiceValue: value,
-    }));
-  },
-
-  changeStudyNiceValue: (value: number) => {
-    set(() => ({
-      studyNiceValue: value,
-    }));
   },
 }));
