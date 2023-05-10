@@ -109,7 +109,7 @@ export const OSim: Scheduling = (processors, processes, timeQuantum) => {
           (processResult) => processResult.processId === processor.currentProcess?.id
         );
         processResultList[processIndex].studyRate +=
-          processor.core.timeEfficiency * (1 / Math.max(1, processor.currentProcess.level));
+          processor.core.timeEfficiency * (3 / processor.currentProcess.level);
 
         // TQ값을 줄인다.
         processResultList[processIndex].TQ -= 1;
