@@ -65,6 +65,14 @@ export const OSim: Scheduling = (processors, processes, timeQuantum) => {
               1
             );
           }
+
+          const index = processorResultList.findIndex(
+            (processorResult) => processorResult.processorId === processor.id
+          );
+          // 시동 전력 기록
+          if (processorResultList[index].processAllocation[currentTime - 1] === null || currentTime === 0) {
+            processorResultList[index].totalPower += processor.core.startingPower;
+          }
         }
       }
     };
@@ -126,7 +134,7 @@ export const OSim: Scheduling = (processors, processes, timeQuantum) => {
       if (processes[index].arrivalTime > currentTime) return;
       if (processes[index].leftWork <= 0) return;
       processResult.memory =
-        100 * Math.exp(-(currentTime - processes[index].arrivalTime / processResult.studyRate) * 3);
+        100 * Math.exp((-(currentTime - processes[index].arrivalTime) / processResult.studyRate) * 3);
     });
   }
 

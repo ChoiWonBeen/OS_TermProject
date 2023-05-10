@@ -8,6 +8,7 @@ interface SchedulerStore {
   scheduler: Scheduler;
   schedulerResult: ScheduleResult | null;
   timeQuantum: number;
+  niceValue: number;
   changeAlgorithm: (type: Scheduler["algorithm"]) => void;
   changeTimeQuantum: (time: number) => void;
   start: () => void;
@@ -21,6 +22,7 @@ export const useSchedulerStore = create<SchedulerStore>((set, get) => ({
   },
   schedulerResult: null,
   timeQuantum: 1,
+  niceValue: 0,
   changeAlgorithm: (type: Scheduler["algorithm"]) => {
     set((state) => ({
       scheduler: {
