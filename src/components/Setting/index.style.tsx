@@ -373,9 +373,9 @@ export const OverviewCoreType = styled.div`
   justify-content: center;
 `;
 
-export const ProcessList = styled.div`
+export const ProcessList = styled.div<{ isOsim?: boolean }>`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: ${({ isOsim }) => (isOsim ? "1fr 1fr 1fr 1fr" : "1fr 1fr 1fr")};
   gap: 5px 4px;
 `;
 
@@ -410,11 +410,11 @@ export const OverviewProcessTime = styled.input`
   }
 `;
 
-export const OverviewProcessListHeader = styled.div`
+export const OverviewProcessListHeader = styled.div<{ isOsim?: boolean }>`
   position: sticky;
   top: -10px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: ${({ isOsim }) => (isOsim ? "1fr 1fr 1fr 1fr" : "1fr 1fr 1fr")};
   gap: 4px;
   background-color: #030e42;
   padding: 9px 0 5px;

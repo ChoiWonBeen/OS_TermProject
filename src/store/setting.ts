@@ -22,7 +22,7 @@ interface ProcessStore {
   addProcess: (process: Process) => void;
   removeProcess: (index: number) => void;
   changeProcess: (index: number, process: Process) => void;
-  changeProcessTime: (index: number, time: number, isArrival: boolean) => void;
+  changeProcessTime: (index: number, time: number, isArrival: boolean, isLevel?: boolean) => void;
 }
 
 export const useCoreStore = create<CoreStore>(() => ({
@@ -95,6 +95,7 @@ export const useProcessStore = create<ProcessStore>((set) => ({
       name: "P1",
       mainColor: MAIN_COLOR_TABLE[0],
       subColor: SUB_COLOR_TABLE[0],
+      level: 0,
     },
   ],
   addProcess: (process: Process) => {
@@ -126,9 +127,15 @@ export const useProcessStore = create<ProcessStore>((set) => ({
     const setVideo = useCatVideoStore.getState().setVideo;
     setVideo(1);
   },
-  changeProcessTime: (index: number, time: number, isArrival: boolean) => {
+  changeProcessTime: (index: number, time: number, isArrival: boolean, isLevel: boolean = false) => {
     set((state) => {
       const newProcesses = [...state.processes];
+      if (isLevel) {
+        newProcesses[index].level = time;
+        return {
+          processes: newProcesses,
+        };
+      }
       if (isArrival) {
         newProcesses[index].arrivalTime = time;
       } else {

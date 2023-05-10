@@ -75,6 +75,7 @@ export const ScheduleResult = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 9px 7px;
+  padding-bottom: 10px;
 `;
 
 export const ScheduleResultHeader = styled.div`
@@ -86,7 +87,7 @@ export const ScheduleResultHeader = styled.div`
 
 export const ProcessName = styled.div<{ color: string }>`
   width: 100%;
-  height: 18px;
+  height: 24px;
   background: ${({ color }) => color};
   color: #ffffff;
   display: flex;
@@ -94,17 +95,17 @@ export const ProcessName = styled.div<{ color: string }>`
   justify-content: center;
   border-radius: 3px;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 16px;
 `;
 
 export const ProcessTime = styled.div`
   width: 100%;
-  height: 18px;
+  height: 24px;
   background: #ffffff;
   color: #000000;
   border-radius: 3px;
   text-align: center;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 500;
   padding: 0;
   display: flex;

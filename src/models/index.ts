@@ -6,6 +6,7 @@ export interface Process {
   name: string;
   mainColor: string;
   subColor: string;
+  level: number;
 }
 
 export interface Core {
