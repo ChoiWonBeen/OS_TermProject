@@ -34,6 +34,7 @@ export interface ProcessResult {
   turnaroundTime: number;
   normalizedTurnaroundTime: number;
   processorAllocation: Array<number | null>;
+  memory?: number;
 }
 
 export interface ProcessorResult {

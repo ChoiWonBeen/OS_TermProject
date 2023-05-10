@@ -11,6 +11,7 @@ function Result() {
   const result = useSchedulerStore((state) => state.schedulerResult);
   const processors = useProcessorStore((state) => state.processors);
   const processes = useProcessStore((state) => state.processes);
+  const isOsim = useSchedulerStore((state) => state.scheduler.algorithm) === "OSim";
 
   return (
     <S.Container>
@@ -56,16 +57,17 @@ function Result() {
 
       <S.BackgroundRight>
         <S.Heading>Scheduling Result</S.Heading>
-        <S.ScheduleResultHeader>
+        <S.ScheduleResultHeader isOsim={isOsim}>
           <S.ProcessName color={"#5639B0"}>ID</S.ProcessName>
           <S.ProcessName color={"#5639B0"}>AT</S.ProcessName>
           <S.ProcessName color={"#5639B0"}>BT</S.ProcessName>
           <S.ProcessName color={"#5639B0"}>WT</S.ProcessName>
           <S.ProcessName color={"#5639B0"}>TT</S.ProcessName>
           <S.ProcessName color={"#5639B0"}>NTT</S.ProcessName>
+          {isOsim && <S.ProcessName color={"#5639B0"}>Memory</S.ProcessName>}
         </S.ScheduleResultHeader>
         <S.ScheduleResultContainer>
-          <S.ScheduleResult>
+          <S.ScheduleResult isOsim={isOsim}>
             {result &&
               result.processResultList.map((processResult, index) => (
                 <Fragment key={processResult.processId}>
@@ -75,6 +77,7 @@ function Result() {
                   <S.ProcessTime>{processResult.waitingTime}</S.ProcessTime>
                   <S.ProcessTime>{processResult.turnaroundTime}</S.ProcessTime>
                   <S.ProcessTime>{processResult.normalizedTurnaroundTime.toFixed(2)}</S.ProcessTime>
+                  {isOsim && <S.ProcessTime>{processResult.memory}</S.ProcessTime>}
                 </Fragment>
               ))}
           </S.ScheduleResult>

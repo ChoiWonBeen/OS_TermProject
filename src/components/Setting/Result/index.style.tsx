@@ -70,18 +70,18 @@ export const ScheduleResultContainer = styled.div`
   }
 `;
 
-export const ScheduleResult = styled.div`
+export const ScheduleResult = styled.div<{ isOsim?: boolean }>`
   padding: 0 18px;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: ${({ isOsim }) => (isOsim ? "repeat(7, 1fr)" : "repeat(6, 1fr)")};
   gap: 9px 7px;
   padding-bottom: 10px;
 `;
 
-export const ScheduleResultHeader = styled.div`
+export const ScheduleResultHeader = styled.div<{ isOsim?: boolean }>`
   padding: 10px 18px 8px;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: ${({ isOsim }) => (isOsim ? "repeat(7, 1fr)" : "repeat(6, 1fr)")};
   gap: 9px 7px;
 `;
 

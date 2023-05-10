@@ -61,7 +61,7 @@ export const OSim: Scheduling = (processors, processes, timeQuantum) => {
             processor.currentProcess = process;
             const processIndex = processResultList.findIndex((processResult) => processResult.processId === process.id);
             processResultList[processIndex].TQ = Math.max(
-              Math.round(TQ + ((100 - processResultList[processIndex].studyRate) / 100) * TQ),
+              Math.round(TQ + ((80 - processResultList[processIndex].memory) / 100) * TQ),
               1
             );
           }
@@ -129,7 +129,7 @@ export const OSim: Scheduling = (processors, processes, timeQuantum) => {
       processResultList[processIndex].waitingTime++;
     });
 
-    // 모든 프로세스의 memory를 감소시킨다.
+    // 모든 프로세스의 memory를 최신화한다. (studyRate가 증가한 process는 증가, 나머진 감소)
     processResultList.forEach((processResult, index) => {
       if (processes[index].arrivalTime > currentTime) return;
       if (processes[index].leftWork <= 0) return;
