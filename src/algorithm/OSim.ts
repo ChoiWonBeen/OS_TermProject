@@ -44,12 +44,12 @@ export const OSim: Scheduling = (processors, processes, timeQuantum) => {
     const fillProcessors = (processor: Processor) => {
       if (processor.currentProcess === null) {
         if (readyQueue.length > 0) {
-          // studyRate가 가장 낮은 프로세스를 찾는다
+          // memory가 가장 낮은 프로세스를 찾는다
           const process = readyQueue.reduce((prev, curr) => {
             const prevProcessResult = processResultList.find((processResult) => processResult.processId === prev.id)!;
             const currProcessResult = processResultList.find((processResult) => processResult.processId === curr.id)!;
 
-            return prevProcessResult.studyRate < currProcessResult.studyRate ? prev : curr;
+            return prevProcessResult.memory < currProcessResult.memory ? prev : curr;
           });
 
           if (process) {
