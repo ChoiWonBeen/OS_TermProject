@@ -1,4 +1,4 @@
-import { Process, ProcessResult, ProcessorResult, Scheduling } from "models";
+import { Process, ProcessResult, Processor, ProcessorResult, Scheduling } from "models";
 
 export const SPN: Scheduling = (processors, processes) => {
   const readyQueue: Process[] = [];
@@ -30,13 +30,20 @@ export const SPN: Scheduling = (processors, processes) => {
       }
     });
 
-    // 프로세서가 비어있으면 readyQueue에서 프로세스를 꺼내서 넣는다.
-    processors.forEach((processor, index) => {
+    // 프로세서가 비어있으면 readyQueue에서 프로세스를 꺼내서 넣는다. (P코어 우선)
+    const PCoreProcessors = processors.filter((processor) => processor.core.name === "P");
+    const ECoreProcessors = processors.filter((processor) => processor.core.name === "E");
+
+    const fillProcessors = (processor: Processor) => {
       if (processor.currentProcess === null) {
         if (readyQueue.length > 0) {
-          // 가장 짧은 burstTime을 가진 프로세스를 찾는다.
+          const processorIndex = processors.findIndex((ps) => ps.id === processor.id);
           const process = readyQueue.reduce((prev, curr) => {
-            return prev.burstTime < curr.burstTime ? prev : curr;
+            // 가장 짧은 burstTime을 가진 프로세스를 찾는다.
+            if (prev.burstTime !== curr.burstTime) return prev.burstTime < curr.burstTime ? prev : curr;
+
+            // burstTime이 같다면 arrivalTime이 더 빠른 프로세스를 찾는다.
+            return prev.arrivalTime < curr.arrivalTime ? prev : curr;
           });
           readyQueue.splice(
             readyQueue.findIndex((rqProcess) => rqProcess.id === process.id),
@@ -46,12 +53,14 @@ export const SPN: Scheduling = (processors, processes) => {
           if (process) {
             processor.currentProcess = process;
           }
-          if (processorResultList[index].processAllocation[currentTime - 1] === null || currentTime === 0) {
-            processorResultList[index].totalPower += processor.core.startingPower;
+          if (processorResultList[processorIndex].processAllocation[currentTime - 1] === null || currentTime === 0) {
+            processorResultList[processorIndex].totalPower += processor.core.startingPower;
           }
         }
       }
-    });
+    };
+    PCoreProcessors.forEach(fillProcessors);
+    ECoreProcessors.forEach(fillProcessors);
 
     // 프로세스의 작업 진행을 기록한다.
     processes.forEach((process, index) => {

@@ -23,16 +23,17 @@ export const FCFS: Scheduling = (processors, processes) => {
 
   while (processes.some((process) => process.leftWork > 0)) {
     let currentTime = time;
-    // 시작 전 프로세스를 readyQueue에 넣는다.
+    // 도착한 프로세스를 readyQueue에 넣기 전 processList에서 대기한다.
     const processList: Process[] = [];
     processes.forEach((process) => {
       if (process.arrivalTime === currentTime) {
         processList.push(process);
       }
     });
-    // process의 leftWork의 내림차순으로 정렬한다.
-    processList.sort((a, b) => b.leftWork - a.leftWork);
+    // process의 burstTime의 내림차순으로 정렬한다.
+    processList.sort((a, b) => b.burstTime - a.burstTime);
 
+    // burstTime이 가장 작은 프로세스부터 readyQueue에 넣는다.
     processList.forEach((process) => {
       readyQueue.push(process);
     });
@@ -58,12 +59,6 @@ export const FCFS: Scheduling = (processors, processes) => {
 
     PCoreProcessors.forEach(fillProcessors);
     ECoreProcessors.forEach(fillProcessors);
-
-    // 프로세서들 탐색하면서
-    // currentProcess가 null인 processor들을 찾고
-    // processor들의 갯수만큼 readyQueue에서 꺼내 list를 만들고
-    // 그 리스트를 BT를 기준으로 정렬하고
-    // P코어에 탐색하면서 넣고 P코어 없으면 E코어에 넣는다.
 
     // 프로세스의 작업 진행을 기록한다.
     processes.forEach((process, index) => {
