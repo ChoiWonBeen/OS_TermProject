@@ -31,9 +31,34 @@ export const SRTN: Scheduling = (processors, processes) => {
     });
 
     const emptyProcessors = processors.filter((processor) => processor.currentProcess === null);
+    const emptyEProcessors = emptyProcessors.filter((processor) => processor.core.name === "E");
+    const emptyPProcessors = emptyProcessors.filter((processor) => processor.core.name === "P");
+
     const fillProcessors = processors.filter((processor) => processor.currentProcess !== null);
 
-    emptyProcessors.forEach((processor, index) => {
+    emptyPProcessors.forEach((processor, index) => {
+      // 프로세서가 비어있으면 readyQueue에서 프로세스를 꺼내서 넣는다.
+      if (processor.currentProcess === null) {
+        if (readyQueue.length > 0) {
+          const process = readyQueue.reduce((prev, curr) => {
+            return prev.leftWork < curr.leftWork ? prev : curr;
+          });
+          readyQueue.splice(
+            readyQueue.findIndex((rqProcess) => rqProcess.id === process.id),
+            1
+          );
+
+          if (process) {
+            processor.currentProcess = process;
+          }
+          if (processorResultList[index].processAllocation[currentTime - 1] === null || currentTime === 0) {
+            processorResultList[index].totalPower += processor.core.startingPower;
+          }
+        }
+      }
+    });
+
+    emptyEProcessors.forEach((processor, index) => {
       // 프로세서가 비어있으면 readyQueue에서 프로세스를 꺼내서 넣는다.
       if (processor.currentProcess === null) {
         if (readyQueue.length > 0) {
@@ -58,7 +83,6 @@ export const SRTN: Scheduling = (processors, processes) => {
     fillProcessors.forEach((processor) => {
       // readyQueue를 조사해서 현재 프로세스보다 더 짧은 leftWork를 가진 프로세스가 있으면
       // 현재 프로세스를 readyQueue에 넣고, 그 프로세스를 현재 프로세스로 바꾼다.
-
       const shorterProcess = readyQueue.find(
         (process) => process.leftWork > 0 && process.leftWork < processor.currentProcess!.leftWork
       );

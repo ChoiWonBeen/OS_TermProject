@@ -1,4 +1,4 @@
-import { Process, ProcessResult, ProcessorResult, Scheduling } from "models";
+import { Process, ProcessResult, Processor, ProcessorResult, Scheduling } from "models";
 
 export const HRRN: Scheduling = (processors, processes) => {
   const readyQueue: Process[] = [];
@@ -31,13 +31,16 @@ export const HRRN: Scheduling = (processors, processes) => {
     });
 
     // 프로세서가 비어있으면 readyQueue에서 프로세스를 꺼내서 넣는다.
-    processors.forEach((processor, index) => {
+    const PCoreProcessors = processors.filter((processor) => processor.core.name === "P");
+    const ECoreProcessors = processors.filter((processor) => processor.core.name === "E");
+
+    const fillProcessors = (processor: Processor) => {
       if (processor.currentProcess === null) {
         if (readyQueue.length > 0) {
           // 가장 큰 responseRatio를 가진 프로세스를 찾는다
           // responseRatio는 (waitingTime + burstTime) / burstTime
           // waitingTime 은 processResultList[index]에서 구할 수 있다
-
+          const processorIndex = processors.findIndex((ps) => ps.id === processor.id);
           const process = readyQueue.reduce((prev, curr) => {
             const prevResponseRatio =
               (processResultList.find((processResult) => processResult.processId === prev.id)!.waitingTime +
@@ -58,12 +61,15 @@ export const HRRN: Scheduling = (processors, processes) => {
           if (process) {
             processor.currentProcess = process;
           }
-          if (processorResultList[index].processAllocation[currentTime - 1] === null || currentTime === 0) {
-            processorResultList[index].totalPower += processor.core.startingPower;
+          if (processorResultList[processorIndex].processAllocation[currentTime - 1] === null || currentTime === 0) {
+            processorResultList[processorIndex].totalPower += processor.core.startingPower;
           }
         }
       }
-    });
+    };
+
+    PCoreProcessors.forEach(fillProcessors);
+    ECoreProcessors.forEach(fillProcessors);
 
     // 프로세스의 작업 진행을 기록한다.
     processes.forEach((process, index) => {
