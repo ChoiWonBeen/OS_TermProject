@@ -12,6 +12,7 @@ export const Container = styled.div`
   background-color: white;
   font-size: 20px;
   padding: 8px 0 12px;
+  z-index: 99999;
 `;
 
 export const HeaderItem = styled.div<{
