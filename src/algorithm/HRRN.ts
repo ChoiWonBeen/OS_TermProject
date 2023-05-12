@@ -39,7 +39,6 @@ export const HRRN: Scheduling = (processors, processes) => {
         if (readyQueue.length > 0) {
           // 가장 큰 responseRatio를 가진 프로세스를 찾는다
           // responseRatio는 (waitingTime + burstTime) / burstTime
-          // waitingTime 은 processResultList[index]에서 구할 수 있다
           const processorIndex = processors.findIndex((ps) => ps.id === processor.id);
           const process = readyQueue.reduce((prev, curr) => {
             const prevResponseRatio =
@@ -50,7 +49,9 @@ export const HRRN: Scheduling = (processors, processes) => {
               (processResultList.find((processResult) => processResult.processId === curr.id)!.waitingTime +
                 curr.burstTime) /
               curr.burstTime;
-            return prevResponseRatio > currResponseRatio ? prev : curr;
+            if (prevResponseRatio !== currResponseRatio) return prevResponseRatio > currResponseRatio ? prev : curr;
+            // responseRatio가 같다면 arrivalTime이 더 빠른 프로세스를 찾는다.
+            else return prev.arrivalTime < curr.arrivalTime ? prev : curr;
           });
 
           readyQueue.splice(

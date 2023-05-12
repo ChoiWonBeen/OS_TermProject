@@ -86,7 +86,6 @@ export const SRTN: Scheduling = (processors, processes) => {
       const shorterProcess = readyQueue.find(
         (process) => process.leftWork > 0 && process.leftWork < processor.currentProcess!.leftWork
       );
-
       if (shorterProcess) {
         readyQueue.splice(
           readyQueue.findIndex((rqProcess) => rqProcess.id === shorterProcess.id),
